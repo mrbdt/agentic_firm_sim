@@ -29,19 +29,19 @@ function renderAgents() {
   for (const a of items) {
     const div = document.createElement("div");
     div.className = "agent";
-    div.innerHTML = \`
+    div.innerHTML = `
       <div class="top">
-        <div class="name">\${a.name} <span style="font-weight:400;color:#666">(\${a.title})</span></div>
-        <div class="status">\${a.status}</div>
+        <div class="name">${a.name} <span style="font-weight:400;color:#666">(${a.title})</span></div>
+        <div class="status">${a.status}</div>
       </div>
       <div class="meta">
-        <div><b>Objective:</b> \${escapeHtml(a.current_objective || "")}</div>
-        <div><b>Activity:</b> \${escapeHtml(a.current_activity || "")}</div>
-        <div><b>Last tool:</b> \${escapeHtml(a.last_tool || "")}</div>
-        <div><b>Inbox:</b> \${a.inbox_depth || 0} | <b>Updated:</b> \${a.updated_ts ? fmtTs(a.updated_ts) : ""}</div>
+        <div><b>Objective:</b> ${escapeHtml(a.current_objective || "")}</div>
+        <div><b>Activity:</b> ${escapeHtml(a.current_activity || "")}</div>
+        <div><b>Last tool:</b> ${escapeHtml(a.last_tool || "")}</div>
+        <div><b>Inbox:</b> ${a.inbox_depth || 0} | <b>Updated:</b> ${a.updated_ts ? fmtTs(a.updated_ts) : ""}</div>
       </div>
-      \${a.last_error ? \`<div class="err"><b>Error:</b> \${escapeHtml(a.last_error)}</div>\` : ""}
-    \`;
+      ${a.last_error ? `<div class="err"><b>Error:</b> ${escapeHtml(a.last_error)}</div>` : ""}
+    `;
     agentsEl.appendChild(div);
   }
 }
@@ -66,27 +66,27 @@ function renderChat(channel, el) {
     const div = document.createElement("div");
     div.className = "msg";
     const pr = m.priority >= 10 ? "HIGH" : "";
-    div.innerHTML = \`
+    div.innerHTML = `
       <div class="hdr">
-        <span>\${escapeHtml(m.sender)} \${pr ? "<b style='color:#b00020'>"+pr+"</b>" : ""}</span>
-        <span>\${fmtTs(m.ts)}</span>
+        <span>${escapeHtml(m.sender)} ${pr ? "<b style='color:#b00020'>"+pr+"</b>" : ""}</span>
+        <span>${fmtTs(m.ts)}</span>
       </div>
-      <div class="body">\${escapeHtml(m.content)}</div>
-    \`;
+      <div class="body">${escapeHtml(m.content)}</div>
+    `;
     el.appendChild(div);
   }
   el.scrollTop = el.scrollHeight;
 }
 
 async function fetchChannelHistory(channel) {
-  const res = await fetch(\`/api/chat/\${encodeURIComponent(channel)}?limit=200\`);
+  const res = await fetch(`/api/chat/${encodeURIComponent(channel)}?limit=200`);
   const data = await res.json();
   const msgs = data.messages || [];
   for (const m of msgs) addMessage(m);
 }
 
 async function postChannelMessage(channel, content) {
-  await fetch(\`/api/chat/\${encodeURIComponent(channel)}\`, {
+  await fetch(`/api/chat/${encodeURIComponent(channel)}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ sender: "chairman", content }),
@@ -109,7 +109,7 @@ async function refreshOrders() {
   for (const o of orders.slice(-200).reverse()) {
     const div = document.createElement("div");
     div.className = "order";
-    div.textContent = \`\${fmtTs(o.ts)} | \${o.side.toUpperCase()} \${o.qty} \${o.symbol} | \${o.status} | \${o.broker_order_id || ""}\`;
+    div.textContent = `${fmtTs(o.ts)} | ${o.side.toUpperCase()} ${o.qty} ${o.symbol} | ${o.status} | ${o.broker_order_id || ""}`;
     ordersEl.appendChild(div);
   }
 }
@@ -151,7 +151,7 @@ refreshOrdersBtn.addEventListener("click", refreshOrders);
 // websocket
 (function connectWS() {
   const proto = window.location.protocol === "https:" ? "wss" : "ws";
-  const url = \`\${proto}://\${window.location.host}/ws\`;
+  const url = `${proto}://${window.location.host}/ws`;
   const ws = new WebSocket(url);
 
   ws.onopen = () => {
