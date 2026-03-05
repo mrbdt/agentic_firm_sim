@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Agentic Firm Simulator</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Agentic Firm Simulator</h1>
+    <div class="sub">Live agent state + internal chat (WebSocket)</div>
+  </header>
+
+  <main class="grid">
+    <section class="panel">
+      <h2>Agents</h2>
+      <div id="agents" class="agents"></div>
+    </section>
+
+    <section class="panel">
+      <h2>CEO Chat (Chairman)</h2>
+      <div class="hint">This posts to <code>dm:chairman:ceo</code> and shows replies in <code>room:chairman</code>.</div>
+      <div id="ceoChat" class="chat"></div>
+      <div class="composer">
+        <input id="ceoInput" placeholder="Ask the CEO… (natural language)" />
+        <select id="ceoPriority">
+          <option value="normal">normal</option>
+          <option value="high">high</option>
+        </select>
+        <button id="ceoSend">Send</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Channel Chat</h2>
+      <div class="composer">
+        <select id="channelSelect">
+          <option value="room:all">room:all</option>
+          <option value="room:research">room:research</option>
+          <option value="room:trade_ideas">room:trade_ideas</option>
+          <option value="room:trade_intents">room:trade_intents</option>
+          <option value="room:trade_approved">room:trade_approved</option>
+          <option value="room:trade_rejected">room:trade_rejected</option>
+          <option value="room:trade_executed">room:trade_executed</option>
+          <option value="room:ops">room:ops</option>
+          <option value="room:chairman">room:chairman</option>
+        </select>
+        <input id="chatInput" placeholder="Send message to selected channel…" />
+        <button id="chatSend">Send</button>
+      </div>
+      <div id="channelChat" class="chat"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Recent Orders</h2>
+      <div id="orders" class="orders"></div>
+      <button id="refreshOrders">Refresh</button>
+    </section>
+  </main>
+
+  <footer>
+    <span id="wsStatus">WS: connecting…</span>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+# Sample agent roster.
+# Set each `model` to a model you have pulled in Ollama (e.g. qwen3.5:4b, qwen3.5:9b, qwen3.5:35b).
+# You can add/remove agents freely.
+
+agents:
+  - id: ceo
+    name: "Alex"
+    title: "CEO"
+    role: "chief_executive_officer"
+    model: "qwen3.5:35b"
+    heartbeat_seconds: 1.0
+    can_trade: false
+
+  - id: researcher
+    name: "Morgan"
+    title: "Head of Research"
+    role: "research"
+    model: "qwen3.5:9b"
+    heartbeat_seconds: 6.0
+    can_trade: false
+
+  - id: pm
+    name: "Riley"
+    title: "Portfolio Manager"
+    role: "portfolio_manager"
+    model: "qwen3.5:9b"
+    heartbeat_seconds: 6.0
+    can_trade: false
+
+  - id: risk
+    name: "Jordan"
+    title: "Chief Risk Officer"
+    role: "risk"
+    model: "qwen3.5:4b"
+    heartbeat_seconds: 2.0
+    can_trade: false
+
+  - id: exec
+    name: "Casey"
+    title: "Head of Execution"
+    role: "execution"
+    model: "qwen3.5:4b"
+    heartbeat_seconds: 2.0
+    can_trade: true
+
+# Firm-wide defaults used by prompts / routines
+firm:
+  timezone: "Europe/London"
+  watchlist:
+    - "SPY"
+    - "QQQ"
+    - "AAPL"
+    - "MSFT"
+    - "NVDA"
+    - "TSLA"
+    - "AMZN"
+    - "GOOGL"
+  allowed_assets: ["stocks", "crypto"]  # execution currently supports stocks + crypto via Alpaca
